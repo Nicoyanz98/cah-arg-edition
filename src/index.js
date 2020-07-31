@@ -40,6 +40,7 @@ var users = [];
 var rooms = [];
 
 // Socket connection
+io.set('origins', '*:*');
 io.on('connection', (socket) =>{
     let newUser = {
         id: socket.id,
