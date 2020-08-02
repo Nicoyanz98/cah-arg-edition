@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/cards', require('./routes/card.routes'));
-app.use('/room', require('./routes/rooms.routes'));
+app.use('/api/room', require('./routes/rooms.routes'));
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public/')));
