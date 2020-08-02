@@ -53,7 +53,7 @@ class ConnectedApp extends Component {
             if (data.cards.black != null)
                 this.setCardToPlayLimit(data.cards);
                         
-            fetch(new URL(`/api/cards/white/7`), {
+            fetch(`/api/cards/white/7`, {
                 method: 'POST',
                 body: JSON.stringify({deck: data.cards.white.deck}),
                 headers: {
@@ -87,7 +87,7 @@ class ConnectedApp extends Component {
                     this.winnerCard(deck[Math.floor(Math.random() * deck.length)]);
                 } else if ((this.props.roomInfo.room.status == "card chosen" || this.props.roomInfo.room.status == "waiting for players") && this.props.userDeck.deck.length < 7) {
                     console.log("here")
-                    fetch(new URL(`/api/cards/white/${7-this.props.userDeck.deck.length}`), {
+                    fetch(`/api/cards/white/${7-this.props.userDeck.deck.length}`, {
                         method: 'POST',
                         body: JSON.stringify({deck: this.props.roomInfo.room.cards.white.deck}),
                         headers: {
@@ -182,7 +182,7 @@ class ConnectedApp extends Component {
     }
 
     newCardPlayed(cardContent) {
-        fetch(new URL(`/api/cards/new/white`), {
+        fetch(`/api/cards/new/white`, {
             method: 'POST',
             body: JSON.stringify({content: cardContent}),
             headers: {
@@ -203,7 +203,7 @@ class ConnectedApp extends Component {
     }
 
     connectToRoom(action, roomId = null) {
-        fetch(new URL(`/room/${action == 'create' ? "new" : roomId}`), {
+        fetch(`/api/room/${action == 'create' ? "new" : roomId}`, {
             method: 'POST',
             body: JSON.stringify({
                 socket: socket.id,
