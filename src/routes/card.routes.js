@@ -24,7 +24,7 @@ router.post('/white/:limit', async (req, res) => {
 
 router.post('/new/:type', async (req, res) => {
     const content = req.body.content;
-    await Card.find({type: 'white', content: content}, async (err, docs) => {
+    await Card.find({type: req.params.type, content: content}, async (err, docs) => {
         if (docs.length) {
             res.json({err: 'The card already exists'});
         } else {
