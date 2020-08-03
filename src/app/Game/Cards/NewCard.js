@@ -5,7 +5,8 @@ import socket from '../../socket.js';
 const inputStyles = {
     background: "rgba(255,255,255,1)",
     color: "black",
-    border: "0"
+    border: "0",
+    fontSize: "14px"
 }
 const buttonStyles = {
     background: "rgba(0,0,0,1)",
@@ -25,7 +26,7 @@ export default class Card extends Component {
 
     selectCard(e, status, judge, didPlay) {
         e.preventDefault();
-        if (status == "players selecting cards" && judge != socket.id && !didPlay)
+        if (status == "players selecting cards" && judge != socket.id && !didPlay && this.state.content.trim().length != 0)
             this.props.newCardPlayed(this.state.content);
     }
 
@@ -50,17 +51,21 @@ export default class Card extends Component {
                     fontSize: "14px"
                 }}
             >
-                <div className="row mx-0">
+                <div className="row mx-0 h-100">
                     <div className="col-sm-12 px-0">
                         {
                             status == "players selecting cards" ?
-                                <form className="d-flex flex-column" onSubmit={(e) => this.selectCard(e, status, judge, didPlay)}>
-                                    <div className="form-group mb-auto">
-                                        <input style={inputStyles} type="text" className="form-control shadow-none font-weight-bold rounded-0" placeholder="Escriba el contenido de la carta" onChange={this.handleChange} name="content" value={this.state.content} />
+                                <form className="mb-0 h-100" onSubmit={(e) => this.selectCard(e, status, judge, didPlay)}>
+                                    <div className="d-flex justify-content-between flex-column h-100">
+                                        <div className="form-group mb-0">
+                                            <input style={inputStyles} type="text" className="form-control shadow-none font-weight-bold rounded-0 mt-1" placeholder="Texto de la carta" onChange={this.handleChange} name="content" value={this.state.content} />
+                                        </div>
+                                        <div className="">
+                                            <button style={buttonStyles} type="submit" className="btn btn-primary btn-block shadow-none rounded-0 w-75 mx-auto mb-2">
+                                                Play New Card
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button style={buttonStyles} type="submit" className="btn btn-primary btn-block shadow-none rounded-0">
-                                        Play New Card
-                                    </button>
                                 </form>
                             : null
                         }

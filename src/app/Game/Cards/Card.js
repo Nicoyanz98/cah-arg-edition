@@ -101,56 +101,61 @@ export default class Card extends Component {
                             return (
                                 <React.Fragment key={key={key}}>
                                     <div
-                                        className={`${card.type == 'white' ? "text-dark" : "text-light"} p-2 font-weight-bold border-black ${deck.length == 1 ? "" : "border-top"}`}
+                                        className={`${card.type == 'white' ? "text-dark" : "text-light"} p-2 font-weight-bold`}
+                                        style={{whiteSpace: 'pre-line'}}
                                     >
-                                        {
-                                            card.type == 'black' ? (
-                                                card.content.includes('<blank>') ?
-                                                    card.content.replace('<blank>', '_______')
-                                                : card.content
-                                            ) : (
-                                                status == "players selecting cards" ? (
-                                                    user != null ? (
-                                                        user.id == socket.id ? (
-                                                            card.content
-                                                        ) : null
-                                                    ) : null
+                                            {
+                                                card.type == 'black' ? (
+                                                    card.content.includes('<blank>') ?
+                                                        card.content.replace(/<blank>/g, '_______').split("<br />").join("\n")
+                                                    : card.content.split("<br />").join("\n")
                                                 ) : (
-                                                    (status == "judge choosing a card" || status == "card chosen" || status == "game finished") && type == "played" ? (
-                                                        card.content
-                                                    ) : null
+                                                    status == "players selecting cards" ? (
+                                                        user != null ? (
+                                                            user.id == socket.id ? (
+                                                                card.content.split("<br />").join("\n")
+                                                            ) : ""
+                                                        ) : ""
+                                                    ) : (
+                                                        (status == "judge choosing a card" || status == "card chosen" || status == "game finished") && type == "played" ? (
+                                                            card.content.split("<br />").join("\n")
+                                                        ) : ""
+                                                    )
                                                 )
-                                            )
-                                        }
+                                            }
                                     </div>
-                                    {this.renderCardUser(user,status,roundWinner)}
                                 </React.Fragment>
                             )
                         })
                     ) : (
                         <>
-                            <div className={`${card.type == 'white' ? "text-dark" : "text-light"} p-2 font-weight-bold`}>
-                                {
-                                    card.type == 'black' ? (
-                                        card.content.includes('<blank>') ?
-                                            card.content.replace('<blank>', '_______')
-                                        : card.content
-                                    ) : (
-                                        user != null ? (
-                                            user.id == socket.id ? (
-                                                card.content
-                                            ) : null
-                                        ) : status == "players selecting cards" ?
-                                            card.content
-                                        : status == "judge choosing a card" && type == "played" ? (
-                                            card.content
-                                        ) : null
-                                    )
-                                }
+                            <div className={`${card.type == 'white' ? "text-dark" : "text-light"} p-2 font-weight-bold`} style={{whiteSpace: 'pre-line'}}>
+                                    {
+                                        card.type == 'black' ? (
+                                            card.content.includes('<blank>') ?
+                                                card.content.replace(/<blank>/g, '_______').split("<br />").join("\n")
+                                            : card.content.split("<br />").join("\n")
+                                        ) : (
+                                            user != null ? (
+                                                user.id == socket.id ? (
+                                                    card.content.split("<br />").join("\n")
+                                                ) : ""
+                                            ) : status == "players selecting cards" ?
+                                                card.content.split("<br />").join("\n")
+                                            : status == "judge choosing a card" && type == "played" ? (
+                                                card.content.split("<br />").join("\n")
+                                            ) : ""
+                                        )
+                                    }
                             </div>
                         </>
                     )
-                }                
+                }
+                {
+                    deck != null ? (
+                        this.renderCardUser(deck[0].user,status,roundWinner)
+                    ) : null
+                }
             </div>
         )        
     }

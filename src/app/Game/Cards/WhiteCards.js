@@ -62,7 +62,7 @@ class ConnectedWhiteCards extends Component {
                                             return <Card card={card} status={status} type="deck" judge={judge.id} key={i} cardPlayed={this.props.cardPlayed} didPlay={this.props.didPlay} />;
                                         })  
                                     }
-                                    <NewCard status={status} judge={judge.id} didPlay={this.props.didPlay} />
+                                    <NewCard status={status} judge={judge.id} didPlay={this.props.didPlay} newCardPlayed={this.props.newCardPlayed} />
                                 </div>
                             </>
                         ) : null

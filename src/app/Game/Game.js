@@ -32,7 +32,7 @@ class ConnectedGame extends Component {
                 </div>
                 <div className="row mx-0 mt-auto">
                     <div className="col-sm-12 px-0 pt-2">
-                        <WhiteCards cardPlayed={this.props.cardPlayed} winnerCard={this.props.winnerCard} didPlay={this.props.didPlay} />
+                        <WhiteCards cardPlayed={this.props.cardPlayed} winnerCard={this.props.winnerCard} didPlay={this.props.didPlay} newCardPlayed={this.props.newCardPlayed} />
                     </div>
                 </div>
             </>
