@@ -23,6 +23,7 @@ class ConnectedApp extends Component {
         };
         this.newMessage = this.newMessage.bind(this);
         this.cardPlayed = this.cardPlayed.bind(this);
+        this.newCardPlayed = this.newCardPlayed.bind(this);
         this.winnerCard = this.winnerCard.bind(this);
         this.setCardToPlayLimit = this.setCardToPlayLimit.bind(this);
         this.changeUserName = this.changeUserName.bind(this);
@@ -126,10 +127,10 @@ class ConnectedApp extends Component {
     }
 
     setCardToPlayLimit(data) {
-        if (data.black.content.match(/<blank>/g).length > 1)
+        if (data.black.content.split('<blank>').length-1 > 1)
             this.setState({
                 ...this.state,
-                cardsToPlay: data.content.match(/<blank>/g).length
+                cardsToPlay: data.black.content.split('<blank>').length-1
             });
     }
 
@@ -153,10 +154,13 @@ class ConnectedApp extends Component {
         if (this.state.cardsPlayed.filter(item => item.card._id == card.card._id).length == 0) // Check if the cards to play are not repeted
             this.setState({
                 ...this.state,
-                didPlay: true,
                 cardsPlayed: [...this.state.cardsPlayed, card]
             }, () => {
                 if (this.state.cardsPlayed.length == this.state.cardsToPlay) { // Check if i have enough cards to play ready
+                    this.setState({
+                        ...this.state,
+                        didPlay: true
+                    });
                     socket.emit('user deck delete', this.state.cardsPlayed);
                     socket.emit('card played', this.state.cardsPlayed);
                     this.setState({...this.state, cardsPlayed: []})
@@ -251,7 +255,7 @@ class ConnectedApp extends Component {
                             <Route exact path="/room/:roomId">
                                 <div className="row mx-0 h-100 w-100" style={{minHeight: "100vh"}}>
                                     <div className="col-sm-12 px-0 d-flex flex-column">
-                                        <Game cardPlayed={this.cardPlayed} winnerCard={this.winnerCard} didPlay={this.state.didPlay} />
+                                        <Game cardPlayed={this.cardPlayed} winnerCard={this.winnerCard} didPlay={this.state.didPlay} newCardPlayed={this.newCardPlayed} />
                                     </div>
                                     <button className="button" className="btn btn-primary shadow-none position-fixed d-flex justify-content-around text-white rounded-circle" style={{background: "rgba(0,0,0,1)", border: "0", bottom: "10px", right: "10px"}} onClick={this.openChat}>
                                         <i className="material-icons">forum</i>
