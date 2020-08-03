@@ -24,7 +24,7 @@ const getSocket = (id, io) => {
     return io.sockets.connected[_.find(Object.keys(io.sockets.connected), key => key == id)];
 }
 
-const joinRoom = (socket, room, newUser, io) => {
+const joinRoom = (socket, room, newUser, io, baseURL) => {
     room.users.push({
         id: newUser.id,
         name: newUser.name,
@@ -44,6 +44,7 @@ const joinRoom = (socket, room, newUser, io) => {
                     if (room.status != "judge choosing a card" && room.status != "card chosen")
                         roomStatus(room, "judge choosing a card", io);
                     else if (room.status == "card chosen") {
+                        fetchBlackCard(room, baseURL, io);
                         roomStatus(room, "players selecting cards", io);
                         let judgeIndex = (room.judge.index+1 < room.users.length) ? (room.judge.index+1) : 0;
                         room.judge = {

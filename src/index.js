@@ -24,7 +24,7 @@ app.use((req, res, next) => {
     req.io = io;
     req.rooms = rooms;
     req.users = users;
-    req.baseURL = baseURL;
+    req.siteURL = baseURL;
     next();
 });
 
