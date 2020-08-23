@@ -132,6 +132,10 @@ class ConnectedApp extends Component {
                 ...this.state,
                 cardsToPlay: data.black.content.split('<blank>').length-1
             });
+        else this.setState({
+                ...this.state,
+                cardsToPlay: 1
+            });
     }
 
     newMessage(content) {
