@@ -136,7 +136,7 @@ class ConnectedApp extends Component {
             this.setState({
                 ...this.state,
                 cardsToPlay: 1
-            }, () => console.log('CardsToPlay: ' + this.state.cardsToPlay);
+            }, () => console.log('CardsToPlay: ' + this.state.cardsToPlay))
         }
     }
 
