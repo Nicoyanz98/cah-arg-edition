@@ -112,8 +112,8 @@ class ConnectedApp extends Component {
             this.props.setRoomJudge(data);
         });
         socket.on('room black card', data => {
-            this.props.setBlackCard(data);
             this.setCardToPlayLimit(data);
+            this.props.setBlackCard(data);
         });
         socket.on('room white cards', data => {
             this.props.updateRoomDeck(data);
@@ -132,10 +132,12 @@ class ConnectedApp extends Component {
                 ...this.state,
                 cardsToPlay: data.black.content.split('<blank>').length-1
             });
-        else this.setState({
+        else {
+            this.setState({
                 ...this.state,
                 cardsToPlay: 1
-            });
+            }, () => console.log('CardsToPlay: ' + this.state.cardsToPlay);
+        }
     }
 
     newMessage(content) {
