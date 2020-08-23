@@ -30,7 +30,7 @@ const joinRoom = (socket, room, newUser, io, baseURL) => {
         name: newUser.name,
         score: 0
     });
-    if (room.users.length >= 3 && (room.status != "players selecting cards" || room.status != "judge choosing a card")) {
+    if (room.users.length >= 3 && (room.status != "players selecting cards" || room.status != "judge choosing a card") && room.interval == null) {
         roomStatus(room, "players selecting cards", io);
 
         room.interval = setInterval(() => {
